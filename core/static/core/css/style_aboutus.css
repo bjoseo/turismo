@@ -1,0 +1,69 @@
+.btn {
+  display: inline-block;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 2px solid transparent;
+  padding: 10px 22px;
+  font-size: 1rem;
+  border-radius: 8px;
+  -webkit-transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, right 0.3s ease-in-out, bottom 0.3s ease-in-out, -webkit-box-shadow 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, right 0.3s ease-in-out, bottom 0.3s ease-in-out, -webkit-box-shadow 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, right 0.3s ease-in-out, bottom 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, right 0.3s ease-in-out, bottom 0.3s ease-in-out, -webkit-box-shadow 0.3s ease-in-out;
+}
+
+.Main { grid-area: Main;
+  min-height: 77vh;
+  margin: 0px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.btn {
+    position: relative;
+    contain: content;
+    left: 10%;
+    bottom: 2%;
+    max-width: 140px;
+  }
+
+.img-team {
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+#img-team{
+    width: 80%;
+}
+
+.fa-arrow-right:before {
+  content: "\f061"
+}
+
+.icons-styles {
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+  margin: 5px;
+}
+
+.article-body p{
+  margin: 0 30px;
+}
+
+.article-body-new p{
+  margin: 0 30px;
+}

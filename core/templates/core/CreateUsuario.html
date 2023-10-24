@@ -1,0 +1,23 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/estilo.css' %}">
+{%endblock%}
+
+{% block title %}Crear Usuario{% endblock %}
+{% block content %}
+<div class="Main">
+  <div class="itemTitulo" style="margin-left: 20%">
+    <h1>Crear Usuario </h1>
+  </div>
+  <div class="form_create">
+    <form method="post" action="{% url 'CreateUsuario' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="input_submit" type="submit">Enviar formulario</button>
+    </form>
+  </div>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+{% endblock %}

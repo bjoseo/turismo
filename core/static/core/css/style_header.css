@@ -1,0 +1,96 @@
+
+.Header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "navbar navbar navbar";
+  grid-area: Header;
+  height: 500px;
+  background-image: url(../images/banner.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (max-width: 320px) {
+  .Header {
+    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "navbar navbar navbar";
+    grid-area: Header;
+    height: 50px;
+    background-color: var(--var-color-primario);
+    background-image: none; */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .Header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "navbar navbar navbar";
+    /* height: 200px; */
+    grid-area: Header;
+    height: 50px;
+    background-color: var(--var-color-primario);
+    background-image: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .Header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "navbar navbar navbar";
+    grid-area: Header;
+    height: 50px;
+    background-color: var(--var-color-primario);
+    background-image: none;
+    z-index: 1;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .Header {
+    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "navbar navbar navbar";
+    grid-area: Header;
+    height: 50px;
+    background-color: var(--var-color-primario);
+    background-image: none;
+    z-index: 1; */
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .Header {
+    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "navbar navbar navbar";
+    grid-area: Header;
+    height: 50px;
+    background-color: var(--var-color-primario);
+    background-image: none;
+    z-index: 1; */
+  }
+}
+

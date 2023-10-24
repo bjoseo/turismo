@@ -1,0 +1,54 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/administracion.css' %}">
+{%endblock%}
+{% block title %}Alta de Destinos{% endblock %}
+{% block content %}
+
+<h2 style="text-align:center"> Informacion de Destinos </h2>
+<table align="center" style="margin: 20px 40px;">
+    <thead>
+        <tr>
+            <th>Destino ID</th>
+            <th>city</th>
+            <th>country</th>
+            <th>description</th>
+            <th>urlImg</th>
+            <th>activo</th>
+            <th>tipo</th>
+            <th>Actualizar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for destino in destinos %}
+        <tr>
+            <td>{{destino.Id}}</td>
+            <td>{{destino.city}}</td>
+            <td>{{destino.country}}</td>
+            <td>{{destino.description}}</td>
+            <td>{{destino.urlImg}}</td>
+            <td>{{destino.activo}}</td>
+            <td>{{destino.tipo}}</td>
+            <td>
+                <a href="modificar_destino/{{destino.pk}}">Update</a>
+            </td>
+            <td>
+                <a href="eliminar_destino/{{destino.pk}}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br><br>
+<div class="alert alert-danger" role="alert">
+    <a href="{% url 'alta_destinos' %}">Ud. quiere ingresar mas Destinos?</a>
+
+    <p>
+        <a href="{% url 'home' %}"><-- Volver</a>
+    </p>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+{% endblock %}

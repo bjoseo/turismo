@@ -1,0 +1,29 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/style_contacto.css' %}">
+{%endblock%}
+
+{% block title %}Contacto{% endblock %}
+{% block content %}
+<div class="Main">
+  <div class="itemTitulo">
+    <h1>Cont&aacutectenos</h1>
+  </div>
+  <div class="itemMapa">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26266.27064110574!2d-58.43425612005323!3d-34.62226705189999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccb0de996fa65%3A0x47296bd9e98ee2ad!2sUspallata%203150%2C%20C1437JCJ%20CABA!5e0!3m2!1ses!2sar!4v1695075658807!5m2!1ses!2sar"
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <form method="post" action="{% url 'contacto' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Enviar formulario</button>
+    <a href="{% url 'mensajes_listado' %}">Ver mensajes</a>
+
+  </form>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+
+{% endblock %}

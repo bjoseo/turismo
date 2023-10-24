@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" type="img" href="{% static 'core/images/logo_1.png' %}">
+  <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+  {% block extra_css%}{%endblock%}
+  <title>FineGap - Turismo - {% block title %}{% endblock %}</title>
+  
+</head>
+
+<body>
+  <div class="container">
+    {% include "core/header.html" %}
+
+    {% block content %}{% endblock %}
+
+    {% include "core/footer.html" %}
+  </div>
+</body>
+</html>

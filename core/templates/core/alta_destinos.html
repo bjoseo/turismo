@@ -1,0 +1,32 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/administracion.css' %}">
+{%endblock%}
+
+{% block title %}Alta de Destinos{% endblock %}
+{% block section_title %}Alta de Destinos{% endblock %}
+{% block content %}
+<div class="Main">
+
+    <a id="alta"></a>
+    <div id="alta">
+        <div class="itemTitulo" style="margin-left: 10%">
+            <h1>Alta Destino </h1>
+        </div>
+
+        <div class="form_alta_destino">
+
+            <h3>Datos del nuevo destino</h3>
+            <form method="post" enctype="multipart/form-data" action="{% url 'alta_destinos' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,362 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Sofia+Sans+Condensed:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* estilos para el formulario */
+
+.estilo_input{
+  width: 95%;
+  height:30px;
+  display:flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+ outline: none;
+ margin-left: 10px;
+ color:rgb(0, 55, 255);
+  
+}
+
+.input_submit{
+  background-color: #41abff;
+  color:aliceblue;
+  font-weight: bold;
+  width:60px;
+  padding:5px 8px;
+  border-radius: 3px;
+
+
+}
+
+
+/* ************************** */
+
+:root{
+    --var-color-primario:#1D4E89 ;
+    --var-color-secundario: #00b2ca2f;
+    --var-color-terciario:#3FC1C0 ;
+    --var-color-titulos: ;
+    --var-color-resaltado: ;
+    --var-color-tranparente: ;
+    --var-color-body: ;
+    font-family: 'Sofia Sans Condensed','roboto', sans-serif;
+}
+html{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    
+}
+body{
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.text-mochileando{
+  font-family:'Dancing Script', strong;
+}
+
+
+.container {  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 55px 1fr ;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Header Header Header"
+      "Main Main Main"
+      "Footer Footer Footer";
+      
+  }
+  
+  .Header {  grid-area: Header;
+   background-color: var(--var-color-primario);
+  }
+  
+  .Main { 
+    grid-area: Main;
+    min-height: 94vh;
+    display: grid;
+    gap: 30px;
+    box-sizing: border-box;
+    /* -webkit-text-size-adjust: 100%; */
+    font-size:x-large;
+    grid-template-areas: 
+    'titulo titulo titulo titulo'
+    'mapa   mapa    form    form'
+    'Footer Footer Footer Footer'; 
+        
+}
+ 
+  
+  
+.itemTitulo {
+    text-align: center;
+    align-self: center;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 2%;
+    grid-area: titulo;
+}
+
+.itemMapa {
+    box-sizing: content-box;
+    margin-left: 3%;
+    grid-area: mapa;
+    justify-content: space-around;
+}
+
+iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.itemForm {
+    width : 90%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: content-box;
+    grid-area: form;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    
+}
+
+.formus {
+    margin-bottom: 2rem;
+    
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    line-height: 1;
+    font-size: 1.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn {
+    color: #fff;
+    background-color: var(--var-color-primario);
+    display: inline-block;
+    cursor: pointer;
+    height: 3rem;
+    box-sizing: content-box;
+    border: 0;
+}
+
+.btn:hover {
+  color: #ac0808;
+  background-color: var(--var-color-secundario);
+}
+
+.Footer {  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "left_f center_f rigth_f"
+      "left_f center_f rigth_f"
+      "left_f center_f rigth_f";
+    grid-area: Footer;
+    background-color: var(--var-color-primario);
+    color: white;
+ }
+
+  .left_f { grid-area: left_f;
+    border-right: solid 1px #bbb;
+    padding: 0.5em 0.1em 0.5em 1em;
+    box-sizing: border-box;
+  }
+  
+  .center_f { grid-area: center_f;
+    border-right: solid 1px #bbb;
+    padding: 0.5em 0.1em 0.5em 1em;
+    box-sizing: border-box;
+  }
+  
+  .rigth_f { grid-area: rigth_f;
+    padding: 0.5em 0.1em 0.5em 1em;
+   }
+   
+    .text-presentation{
+      margin: 2px;
+    }
+
+  
+  /* Add a black background color to the top navigation */
+.topnav {
+    /* background-color:var(--var-color-primario); */
+    overflow: hidden;
+    }
+    
+    /* Style the links inside the navigation bar */
+    .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 17px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    
+    /* Change the color of links on hover */
+    .topnav a:hover {
+      background-color: var(--var-color-secundario);
+    color: black;
+    border-radius: 10px;
+    }
+    
+    /* Add an active class to highlight the current page */
+    .topnav a.active {
+    /* background-color: var(--var-color-secundario); */
+    color: white;
+    padding:0;
+    }
+    
+    /* Hide the link that should open and close the topnav on small screens */
+    .topnav .icon {
+    display: none;
+    }
+
+  /* footer styles */
+  
+  .ta-l {
+    text-align: left;
+  }
+  
+  .footer-col a {
+    display: block;
+    margin: 0.3em 0;
+  }
+.footer-logo-container{
+  display: flex;
+  align-items: center;
+}
+
+.icons-styles{
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+  margin: 5px;
+}
+
+.our-site{
+  text-decoration: none;
+  color: white;
+}
+
+    @media screen and (max-width:760px){
+      .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+    
+  }
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+    background-color: var(--var-color-primario);
+    background-image: none;
+    
+  }
+  .container {  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 55px 2fr 200px;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Header Header Header"
+      "Main Main Main"
+      "Footer Footer Footer";
+  }
+  
+  .Header {  grid-area: Header;
+    background-color: var(--var-color-primario);
+  }
+
+  .Main {
+    grid-template-areas: 
+    'header header header header'
+    'titulo titulo titulo titulo'
+    'mapa   mapa    mapa    mapa'
+    'mapa   mapa    mapa    mapa'
+    'form   form    form    form'
+    'form   form    form    form'
+    'footer footer footer footer'
+
+}
+.itemForm {
+    align-items: center;
+    margin: 8px 0px 0px;
+    padding: 0px 12px;
+}
+.itemMapa {
+    margin: 8px 0px 0px;
+    padding: 0px 14px;
+    height: 400px;
+}
+.btn {
+    margin-left: 3%;
+}
+
+}
+
+@media screen and (max-width:480px){
+  .container {  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 55px 2fr 200px;
+    gap: 0px 0px;
+
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Header Header Header"
+      "Main Main Main"
+      "Footer Footer Footer";
+      
+  }
+  
+  .Header {  grid-area: Header;
+    background-color: var(--var-color-primario);
+  }
+
+  .Carrousel {
+    display: none;
+  }
+  .Footer {  display: grid;
+    grid-template-columns:  1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "center_f "
+      "center_f"
+      "center_f";
+    grid-area: Footer;
+    background-color: var(--var-color-primario);
+  }
+  
+  .left_f { grid-area: left_f;
+            display: none;  
+  }
+  
+  .center_f { grid-area: center_f;
+
+  }
+  
+  .rigth_f { grid-area: rigth_f;
+            display: none;
+  }
+} 

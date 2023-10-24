@@ -1,0 +1,19 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+{%endblock%}
+{% block title %}Error{% endblock %}
+{% block content %}
+<div class="Main">
+    <div class="container-error item-center">
+        <lord-icon src="https://cdn.lordicon.com/vyukcgvf.json" trigger="loop-on-hover" delay="1000"
+            class="item-center icon-error" colors="outline:#121331,primary:#ffc738,secondary:#92140c" stroke="60">
+        </lord-icon>
+        <h1 class="item-center">Error 404</h1>
+        <h3 class="item-center">Página en construcción</h3>
+    </div>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+
+ {% endblock %}

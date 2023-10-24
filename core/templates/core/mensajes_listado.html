@@ -1,0 +1,37 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/administracion.css' %}">
+{%endblock%}
+
+{% block title %}Listado Mensajes{% endblock %}
+{% block section_title %}Listado De Mensajes{% endblock %}
+{% block content %}
+<div class="Main">
+    <div class="form_mensajes"><h2 style="text-align:center"> Contactos recibidos </h2>
+        <table align="center" style="margin: 20px 40px;">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Asunto</th>
+                    <th>Mensaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mensaje in mensajes %}
+                <tr>
+                    <td>{{mensaje.name}}</td>
+                    <td>{{mensaje.lastname}}</td>
+                    <td>{{mensaje.email}}</td>
+                    <td>{{mensaje.subject}}</td>
+                    <td>{{mensaje.message}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock %}

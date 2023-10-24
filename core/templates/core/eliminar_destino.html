@@ -1,0 +1,29 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/administracion.css' %}">
+{%endblock%}
+{% block title %}Alta de Destinos{% endblock %}
+{% block content %}
+<div class="Main">
+
+    <form method="POST" >
+        {% csrf_token %}
+
+        <br><br>
+        <div class="alert alert-danger" role="alert">
+            Esta seguro que quiere eliminar? Ciudad ==> {{ destinos.city}} Pais ==> {{ destinos.country}}
+        </div>
+        <br><br>
+
+        <div class="alert alert-danger" role="alert">
+            <a href="{% url 'mostrar_destinos' %}">Confirmar</a>
+        
+            <p>
+                <a href="{% url 'mostrar_destinos' %}"><-- Volver</a>
+            </p>
+        </div>
+    </form>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+{% endblock %}

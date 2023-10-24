@@ -1,0 +1,19 @@
+<div class="Header" id="div-header">
+    <div class="navbar">
+        <div class="topnav" id="myTopnav">
+            <a href="{% url 'home' %}" class="active">
+                <lord-icon src="https://cdn.lordicon.com/vkweisbr.json" trigger="loop-on-hover" delay="2000"
+                    colors="outline:#121331,primary:#646e78,secondary:#2ca58d,tertiary:#1d4e89"
+                    style="width: 50px; height: 50px">
+                </lord-icon>
+            </a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'contacto' %}">Contáctenos</a>
+            <a href="{% url 'acerca_de' %}">Acerca de nosotros</a>
+            <a href="{% url 'mostrar_destinos' %}">Administracion</a>
+            <a href="javascript:void(0);" class="icon" onclick="burguerMenu()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+</div>
