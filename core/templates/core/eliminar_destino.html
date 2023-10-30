@@ -7,20 +7,20 @@
 {% block content %}
 <div class="Main">
 
-    <form method="POST" >
+    <form method="POST" action="">
         {% csrf_token %}
 
         <br><br>
         <div class="alert alert-danger" role="alert">
-            Esta seguro que quiere eliminar? Ciudad ==> {{ destinos.city}} Pais ==> {{ destinos.country}}
+            Esta seguro que quiere eliminar este Destino?
+             Ciudad ==> {{ destinos.city}} Pais ==> {{ destinos.country}}
         </div>
         <br><br>
 
         <div class="alert alert-danger" role="alert">
-            <a href="{% url 'mostrar_destinos' %}">Confirmar</a>
-        
+            <a href="{% url 'mostrar_destinos' %}"><-- Volver</a>
             <p>
-                <a href="{% url 'mostrar_destinos' %}"><-- Volver</a>
+                <input class="btn btn-danger" type="submit" value="Confirmar">
             </p>
         </div>
     </form>

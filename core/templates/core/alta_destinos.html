@@ -12,17 +12,62 @@
 
     <a id="alta"></a>
     <div id="alta">
-        <div class="itemTitulo" style="margin-left: 10%">
+        <div class="itemTitulo" style="margin-left: 5%">
             <h1>Alta Destino </h1>
         </div>
 
         <div class="form_alta_destino">
 
-            <h3>Datos del nuevo destino</h3>
+            <h3 style="text-align:center">Datos del nuevo destino</h3>
             <form method="post" enctype="multipart/form-data" action="{% url 'alta_destinos' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit">
+                <!-- {{ form.as_p }} -->
+                <table style="width:50%" align="center">
+                    <tr>
+                        <td>Destino</td>
+                        <td><input type="text" class="estilo_input" name="Id" autofocus></td>
+                    </tr>
+                    <tr>
+                        <td>Ciudad</td>
+                        <td><input type="text" class="estilo_input" name="city"></td>
+                    </tr>
+                    <tr>
+                        <td>Pais</td>
+                        <td><input type="text" class="estilo_input" name="country"></td>
+                    </tr>
+                    <tr>
+                        <td>Descripcion</td>
+                        <td><input type="textarea" class="estilo_input" name="description"></td>
+                    </tr>
+                     <tr>
+                        <td>Imagen</td>
+                        <td>
+                            <input type="file" name="urlImg">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="tipo">Seleccione Estado</label>
+                        </td>
+                        <td>
+                            <select id="tipo" name="tipo" onChange="">
+                                <option  value="1" selected="selected">Elegidos</option>
+                                <option  value="2" >Recomendados</option>
+                                <option  value="3" >inactivo</option>
+                            </select>                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="submit" value="Confirmar" class="btn btn-success">
+                            <p>
+                                <a class="volver" href="{% url 'mostrar_destinos' %}">         Volver</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+        
+            
             </form>
         </div>
     </div>

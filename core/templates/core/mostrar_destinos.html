@@ -2,6 +2,7 @@
 {% load static %}
 {% block extra_css%}
 <link rel="stylesheet" href="{% static 'core/css/administracion.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'core/css/checkbox.css' %}"> -->
 {%endblock%}
 {% block title %}Alta de Destinos{% endblock %}
 {% block content %}
@@ -10,13 +11,12 @@
 <table align="center" style="margin: 20px 40px;">
     <thead>
         <tr>
-            <th>Destino ID</th>
-            <th>city</th>
-            <th>country</th>
-            <th>description</th>
-            <th>urlImg</th>
-            <th>activo</th>
-            <th>tipo</th>
+            <th>ID</th>
+            <th>ciudad</th>
+            <th>Pais</th>
+            <th>Descripcion</th>
+            <th>Imagen</th>
+            <th>Estado</th>
             <th>Actualizar</th>
             <th>Eliminar</th>
         </tr>
@@ -28,14 +28,32 @@
             <td>{{destino.city}}</td>
             <td>{{destino.country}}</td>
             <td>{{destino.description}}</td>
-            <td>{{destino.urlImg}}</td>
-            <td>{{destino.activo}}</td>
-            <td>{{destino.tipo}}</td>
+
             <td>
-                <a href="modificar_destino/{{destino.pk}}">Update</a>
+                {% if destino.urlImg %}
+                <img src="{{destino.urlImg.url}}" style="height:50px; width:50px;" alt="...">
+                {% else %}
+                <img src="" style="height:50px; width:50px;" alt="...">
+                {% endif %}
             </td>
             <td>
-                <a href="eliminar_destino/{{destino.pk}}">Delete</a>
+                {% if destino.tipo == '1' %}
+                    "Elegidos"
+                {% elif destino.tipo == '2' %}
+                    "Recomendados" 
+                {% else %}
+                    "Inactivo"
+                {% endif %}
+            </td>
+            <td>
+                <a href="modificar_destino/{{destino.pk}}">
+                <img src="{% static 'core/images/editar.png' %}" style="height:40px; width:40px;" alt="...">
+                </a>
+            </td>
+            <td>
+                <a href="eliminar_destino/{{destino.pk}}">
+                <img src="{% static 'core/images/eliminar.png' %}" style="height:40px; width:40px;" alt="...">
+                </a>
             </td>
         </tr>
         {% endfor %}
@@ -44,10 +62,10 @@
 
 <br><br>
 <div class="alert alert-danger" role="alert">
-    <a href="{% url 'alta_destinos' %}">Ud. quiere ingresar mas Destinos?</a>
+    <a  class="alta" href="{% url 'alta_destinos' %}">Ud. quiere ingresar mas Destinos?</a>
 
     <p>
-        <a href="{% url 'home' %}"><-- Volver</a>
+        <a class="volver" href="{% url 'home' %}">Volver</a>
     </p>
 </div>
 <script src="{% static 'core/js/index.js' %}"></script>

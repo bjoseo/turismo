@@ -1,0 +1,39 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/estilo.css' %}">
+{%endblock%}
+
+{% block title %}Crear Usuario{% endblock %}
+{% block content %}
+<div class="Main">
+  <div class="itemTitulo" style="margin-left: 20%">
+    <h1>Crear Usuario </h1>
+  </div>
+  <div class="form_create">
+    <form method="post" action="{% url 'create_usuario' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="input_submit" type="submit">Enviar formulario</button>
+    </form>
+  </div>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+<script>
+  var x = document.getElementById("fmail");
+  // x.addEventListener("focus", myFocusFunction, true);
+  x.addEventListener("blur", read_usuario/"fmail", true);
+  
+  function myFocusFunction() {
+    document.getElementById("fmail").style.backgroundColor = "yellow"; 
+  }
+  
+  function myBlurFunction() {
+    // read_usuario/{{usuario.pk}}
+    document.getElementById("fmail").style.backgroundColor = "red"; 
+    // read_usuario
+  }
+  
+  </script>
+{% endblock %}
