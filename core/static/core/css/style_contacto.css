@@ -148,8 +148,8 @@ input, textarea, button {
 }
 
 .btn:hover {
-  color: #ac0808;
-  background-color: var(--var-color-secundario);
+  color: #fff;
+  background-color: #4a71a0;
 }
 
 .Footer {  display: grid;

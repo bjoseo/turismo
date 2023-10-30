@@ -287,7 +287,7 @@ td {
 .alert {
   display: block;
   width: 100%;
-  margin-left: 40px;
+  /* margin-left: 40px; */
   margin-right: auto;
   text-align: left;
   font-size: 1.9rem;
@@ -296,3 +296,64 @@ td {
 .form_mensajes {
   text-align: center;
 } 
+
+select {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-family: cursive, sans-serif;
+  outline: 0;
+  background: #2ecc71;
+  color: #fff;
+  border: 1px solid crimson;
+  padding: 4px;
+  border-radius: 9px;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.volver {
+  width: 100%;
+  background-color: #2592c4;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+}
+
+.volver:hover {
+  background-color: #40a2c5;
+}
+
+.alta {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+}
+
+.alta:hover {
+  background-color: #45a049;
+}
