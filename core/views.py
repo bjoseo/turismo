@@ -4,71 +4,77 @@
 from django.shortcuts import render, redirect
 from .forms import Formulariocontacto, FormularioUsuario
 from django.http import HttpResponse
-from .models import Usuario, Contacto, Destinos
+from .models import Contacto, Destinos, Travel
 from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.db import IntegrityError
 from django.contrib import messages
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # pagina de inicio
 
 def home(request):
-    return render(request, 'core/home.html')
+    request.session['user_name'] = "{{user.username}}"
+    request.session['user_last_name'] = "{{user.last_name}}"
+    request.session['usuario'] = "{{user.id}}"
+    destinos = Destinos.objects.all()
+    # return render(request,'core/mostrar_destinos.html',{'destinos':destinos} )
+
+    return render(request, 'core/home.html',{'destinos':destinos})
 
 # pagina para login
 
-def login(request):
-    context = {
-    }
-    return render(request, "core/login.html", context)
+# def login(request):
+#     context = {
+#     }
+#     return render(request, "core/login.html", context)
 
-# opcion para drear usuario
+# opcion para crear usuario
 
 def create_usuario(request):
     if request.method == 'POST':
         form = FormularioUsuario(request.POST)
-        if form.is_valid():
-            # Procesar el formulario si es válido
-            nombre = form.cleaned_data['name']
-            correo = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            # Puedes realizar acciones adicionales aquí, como enviar un correo electrónico o guardar en la base de datos
-            usuario = Usuario(name=nombre,email=correo,password=password)
+        # if form.is_valid():
+        #     # Procesar el formulario si es válido
+        #     nombre = form.cleaned_data['name']
+        #     correo = form.cleaned_data['email']
+        #     password = form.cleaned_data['password']
+        #     # Puedes realizar acciones adicionales aquí, como enviar un correo electrónico o guardar en la base de datos
+        #     # usuario = Usuario(name=nombre,email=correo,password=password)
 
-            try:
-                usuario.save()
-            except Exception as err:
-                messages.error(request, " ocurrio un error ",err)
-                return redirect(reverse("login"))
+        #     try:
+        #         usuario.save()
+        #     except Exception as err:
+        #         messages.error(request, " ocurrio un error ",err)
+        #         return redirect(reverse("login"))
 
-            messages.info(request, "Usuario dado de alta correctamente")
-            return redirect(reverse("home"))
+        #     messages.info(request, "Usuario dado de alta correctamente")
+        #     return redirect(reverse("home"))
     else:
         # Mostrar un formulario en blanco si no se ha enviado
         form = FormularioUsuario()
 
     return render(request, 'core/create_usuario.html', {'form': form})
 
-# Recuperar un Usuario
-
-def read_usuario(request,pk):
-    try:
-        destinos = Usuario.objects.get(id=pk)
-    except Exception as err:
-        messages.error(request, " no exixte ",err)
-        return
-            
-    messages.info(request, "si existe")
-    return
-
-    # return (destinos.email)
 
 
 # pagina para enviar mensaje de contacto
 
 def contacto(request):
+    user_name = request.session['user_name']
+    user_last_name = request.session['user_last_name']
+    # user_id = request.session['usuario']
+    
+    context = {
+        'user_name' : user_name,
+        'user_last_name' : user_last_name,
+        # 'user_id' : user_id
+    }
+
     if request.method == 'POST':
         form = Formulariocontacto(request.POST)
         if form.is_valid():
@@ -78,6 +84,7 @@ def contacto(request):
             correo = form.cleaned_data['email']
             asunto = form.cleaned_data['subject']
             mensaje = form.cleaned_data['message']
+
             fecha = datetime.now()
             # Puedes realizar acciones adicionales aquí, como enviar un correo electrónico o guardar en la base de datos
             contacto = Contacto(name=nombre,lastname=apellido,email=correo,subject=asunto,message=mensaje,fecha=fecha)
@@ -111,7 +118,7 @@ def acerca_de(request):
     return render(request, 'core/acerca_de.html')
 
 # Opcion Administracion CRUD tabla Destinos
-        
+@login_required  
 def mostrar_destinos(request):
     destinos = Destinos.objects.all()
     return render(request,'core/mostrar_destinos.html',{'destinos':destinos} )
@@ -170,6 +177,40 @@ def eliminar_destino(request, pk):
 
     return render(request, 'core/eliminar_destino.html', context)
 
+# alta Travel
+
+def alta_travel(request,pk):
+    destinos = Destinos.objects.get(id=pk)
+    if request.method == 'POST':
+            Destinos.Id = request.POST['Id']
+            Destinos.city = request.POST['city']
+            Destinos.country = request.POST['country']
+            Destinos.description = request.POST['description']
+            Destinos.urlImg = request.POST.get('urlImg')
+            Destinos.tipo = request.POST.get('tipo')
+            try:
+                Destinos.save()   
+            except Exception as err:
+                messages.error(request, " ocurrio un error ",err)
+                return redirect('mostrar_destinos')
+
+            messages.info(request, "Se Modifico el Destino correctamente")
+            return redirect('mostrar_destinos')
+    context = {
+            'destinos': destinos,
+    }
+
+    return render(request,'core/alta_travel.html',context)
+
+
+# class TravelCreateView(CreateView):
+#     model = Destinos
+#     # model1 = Travel
+#     request  = "files"
+#     template_name = 'core/alta_travel.html'
+#     success_url = 'home'
+#     fields = '__all__'
+
 # pagina de error 404
 
 def error_404(request):
@@ -197,16 +238,30 @@ def error_404(request):
 
 
 
-# class DestinosListView(ListView):
+# class DestinosListView(LoginRequiredMixin,ListView):
 #     model = Destinos
 #     context_object_name = 'destinos'
 #     template_name = 'core/destinos_listado.html'
-#    ordering = ['tipo']
+#     ordering = ['tipo']
 
-# class MensajesListView(ListView):
+# class MensajesListView(LoginRequiredMixin,ListView):
 #     model = Contacto
 #     context_object_name = 'listado_mensajes'
 #     template_name = 'core/mensajes_listado.html'
 #     ordering = ['name']
 
+# Recuperar un Usuario
 
+# def read_usuario(request,pk):
+#     try:
+#         destinos = Usuario.objects.get(id=pk)
+#     except Exception as err:
+#         messages.error(request, " no exixte ",err)
+#         return
+            
+#     messages.info(request, "si existe")
+#     return
+
+    # return (usuario.email)
+
+    # return render(request, 'core/contacto.html', {'form': form}, context = context)
