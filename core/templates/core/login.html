@@ -1,44 +1,65 @@
 {% extends "core/layout.html" %}
 {% load static %}
 {% block extra_css%}
-    <link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/estilo.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/estilo.css' %}">
 {%endblock%}
 
 {% block title %}Login{% endblock %}
 {% block content %}
 
-        <div class="Main">
-            <div id="central">
-                <div id="login">
-                    <div class="div-logo">
-                        <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-                        <lord-icon id="logo" src="https://cdn.lordicon.com/vkweisbr.json" trigger="loop-on-hover"
-                            delay="2000" colors="outline:#121331,primary:#646e78,secondary:#2ca58d,tertiary:#1d4e89"
-                            style="width:100px;height:100px"> </lord-icon>
-                        <h2 class="welcome">BIENVENIDOS</h2>
-                    </div>
-                    <form class="cuadro">
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Correo electronico"
-                            required autofocus>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña"
-                            required>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="remember-me"> Recordarme
-                            </label>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="home.html">Iniciar sesión</button>
-                        </div>
-                    </form>
-                    <div class="pie-form">
-                        <a href="{% url 'error' %}">¿Olvidaste tu contraseña?</a>
-                        <a href="{% url 'create_usuario' %}">¿No tienes Cuenta? Registrate</a>
-                        <a href="{% url 'home' %}">← Volver</a>
-                    </div>
-                </div>
+<div class="Main">
+    <div id="central">
+        <div id="login">
+            <div class="div-logo">
+                <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+                <lord-icon id="logo" src="https://cdn.lordicon.com/vkweisbr.json" trigger="loop-on-hover" delay="2000"
+                    colors="outline:#121331,primary:#646e78,secondary:#2ca58d,tertiary:#1d4e89"
+                    style="width:100px;height:100px"> </lord-icon>
+                <h2 class="welcome">BIENVENIDOS</h2>
+            </div>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>Nombre Usuario :</td>
+                        <td class="form-control">{{ form.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>Contraseña</td>
+                        <td class="form-control">{{ form.password }}</td>
+                    </tr>
+                </table>
+
+                <input type="submit" value="login">
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+            <div class="pie-form">
+                <a href="{% url 'error' %}">¿Olvidaste tu contraseña?</a>
+                <a href="{% url 'create_usuario' %}">¿No tienes Cuenta? Registrate</a>
+                <a href="{% url 'home' %}">← Volver</a>
             </div>
         </div>
     </div>
-  <script src="{% static 'core/js/index.js' %}"></script>
-  
+</div>
+</div>
+
+<script src="{% static 'core/js/index.js' %}"></script>
+
 {% endblock %}
+
+<!-- <td>{{ form.username.label_tag }}</td> -->
+<!-- <td>{{ form.password.label_tag }}</td> -->
+
+<!-- <form class="cuadro">
+    <input type="email" id="inputEmail" value="" class="form-control" placeholder="Correo electronico"
+        required autofocus>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña"
+        required>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="remember-me"> Recordarme
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="{% url 'home' %}">Iniciar sesión</button>
+    </div>
+</form> -->

@@ -7,10 +7,21 @@
                     style="width: 50px; height: 50px">
                 </lord-icon>
             </a>
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'contacto' %}">Contáctenos</a>
+
+            <!-- <a href="{% url 'login' %}">Login</a> -->
+            {% if perms.core.view_destinos %}
+                <a href="{% url 'contacto' %}">Contáctenos</a>
+            {% endif %}
             <a href="{% url 'acerca_de' %}">Acerca de nosotros</a>
-            <a href="{% url 'mostrar_destinos' %}">Administracion</a>
+            {% if perms.core.add_destinos %}
+                <a href="{% url 'mostrar_destinos' %}">Administracion</a>
+            {% endif %}
+            {% if not user.is_authenticated %}
+                <a href="{% url 'login' %}">Login</a>
+            {% else %}
+                <p>*** <b id="usuario">{{user.id}} </b> *** <b id="username">{{user.username}} </b> *** <b id="lastname">{{user.last_name}} </b> ***</p>
+                <a class="logout" {{user.username}} href="{% url 'logout' %}">Logout</a>
+            {% endif %}
             <a href="javascript:void(0);" class="icon" onclick="burguerMenu()">
                 <i class="fa fa-bars"></i>
             </a>

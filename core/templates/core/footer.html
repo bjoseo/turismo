@@ -33,6 +33,8 @@
         <a class="our-site" href="{% url 'login' %}">login</a>
         <a class="our-site" href="{% url 'contacto' %}">Contáctenos</a>
         <a class="our-site" href="{% url 'acerca_de' %}">Acerca de nosotros</a>
-        <a class="our-site" href="{% url 'mostrar_destinos' %}">Administracion</a>
+        {% if perms.core.view_destinos %}
+            <a class="our-site" href="{% url 'mostrar_destinos' %}">Administracion</a>
+        {% endif %}
     </div>
 </div>

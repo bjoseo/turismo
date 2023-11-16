@@ -20,10 +20,27 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button class="btn" type="submit">Enviar formulario</button>
-    <a href="{% url 'mensajes_listado' %}">Ver mensajes</a>
-
-  </form>
+    {% if perms.core.view_contacto %}
+      <a href="{% url 'mensajes_listado' %}">Ver mensajes</a>
+    {% endif %}
+    </form>
 </div>
 <script src="{% static 'core/js/index.js' %}"></script>
 
+<!-- <script>
+  function verdatos(){
+  var name = document.getElementById("username").value;
+  var lastname = document.getElementById("lastname").value;
+  var id = document.getElementById("usuario").value;
+  alert(" lastname "+lastname)
+  document.getElementById("fname").value = name;
+  document.getElementById("fapell").value = lastname;
+  document.getElementById("fmail").value = id;
+} 
+</script> -->
+
 {% endblock %}
+
+    <!-- {% if user.is_authenticated %}
+      <a href="{% url 'mensajes_listado' %}">Ver mensajes</a>
+    {% endif %} -->

@@ -1,22 +1,84 @@
 {% extends "core/layout.html" %}
 {% load static %}
 {% block extra_css%}
-    <link rel="stylesheet" href="{% static 'core/css/style_header.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/style_footer.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/style_header.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/style_footer.css' %}">
 {%endblock%}
 {% block content %}
 <div class="Main">
 
     <h2 class="title-section">NUESTROS DETINOS MÁS ELIGIDOS</h2>
     <section class="articles" id="id-section-elegidos">
+        <table align="center" style="margin: 20px 40px;">
+            <tbody>
+                {% for destino in destinos %}
+                {% if destino.tipo == '1' %}
+                <tr>
+                    <td>{{destino.Id}}</td>
+                    <td>{{destino.city}}</td>
+                    <td>{{destino.country}}</td>
+                    <td>{{destino.description}}</td>
+
+                    <td>
+                        {% if destino.urlImg %}
+                        <img src="{{destino.urlImg.url}}" style="height:150px; width:150px;aspect-ratio: 16 / 9;"
+                            alt="...">
+                        {% else %}
+                        <img src="" style="height:50px; width:50px;" alt="...">
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user.is_authenticated %}
+                            <a href="alta_travel/{{destino.pk}}">
+                                <img src="{% static 'core/images/compra-en-linea.png' %}" style="height:80px; width:80px;"
+                                    alt="...">
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
     </section>
 
     <h2 class="title-section">NUESTRAS RECOMENDACIONES PARA TÍ</h2>
     <section class="articles" id="id-section-recomendaciones">
+        <table align="center" style="margin: 20px 40px;">
+            <tbody>
+                {% for destino in destinos %}
+                {% if destino.tipo == '2' %}
+                <tr>
+                    <td>{{destino.Id}}</td>
+                    <td>{{destino.city}}</td>
+                    <td>{{destino.country}}</td>
+                    <td>{{destino.description}}</td>
+
+                    <td>
+                        {% if destino.urlImg %}
+                        <img src="{{destino.urlImg.url}}" style="height:150px; width:150px;aspect-ratio: 16 / 9;"
+                            alt="...">
+                        {% else %}
+                        <img src="" style="height:50px; width:50px;" alt="...">
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="alta_travel/{{destino.pk}}">
+                            <img src="{% static 'core/images/compra-en-linea.png' %}" style="height:80px; width:80px;"
+                                alt="...">
+                        </a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
     </section>
 </div>
-<script src="{% static 'core/js/elements.js' %}"></script>
 <script src="{% static 'core/js/index.js' %}"></script>
 <!-- <script src="{% static 'core/js/elements.js' %}"></script> -->
 {% endblock %}
+<!-- {% if destino.tipo == '1' %}
+{% endif %} -->
