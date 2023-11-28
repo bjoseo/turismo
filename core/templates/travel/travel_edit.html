@@ -1,0 +1,22 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+  <link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/style_aboutus.css' %}">
+  {%endblock%}
+
+{% block title %}Nosotros{% endblock %}
+{% block content %}
+
+    <div class="Main">
+    <h1>{% if form.instance.pk %}Editar{% else %}Nuevo{% endif %} Viaje</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+    <a href="{% url 'home' %}">Cancelar</a>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+
+  {% endblock %}

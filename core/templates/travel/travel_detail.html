@@ -1,0 +1,26 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+  <link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/style_aboutus.css' %}">
+  {%endblock%}
+
+{% block title %}Nosotros{% endblock %}
+{% block content %}
+
+    <div class="Main">
+    <h1>{{ travel.travel_destinos }}</h1>
+    <p>Fecha Desde: {{ travel.fecha_desde }}</p>
+    <p>Fecha Hasta: {{ travel.fecha_hasta }}</p>
+    <p>valor : {{ travel.valor }}</p>
+    <p>pasajeros : {{ travel.pasajeros }}</p>
+    <p>usuarios : {{ travel.usuarios }}</p>
+    <p>excursiones : {{ travel.excursiones }}</p>
+
+    <!-- <a href="{% url 'travel_edit' pk=travel.pk %}">Editar</a>
+    <a href="{% url 'travel_list' %}">Volver al listado</a> -->
+    <a href="{% url 'home' %}">Inicio</a>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+
+  {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+  <link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/style_aboutus.css' %}">
+  {%endblock%}
+
+{% block title %}Paquetes Vendidos{% endblock %}
+{% block content %}
+<div class="Main">
+    <h1>Listado de Paquetes</h1>
+    <ul>
+        {% for travel in travels %}
+            <li><a href="{% url 'travel_detail_admin' pk=travel.pk %}">{{ travel.travel_destinos }} Fecha Desde:  {{ travel.fecha_desde }} Fecha Hasta:  {{ travel.fecha_hasta }} Valor : {{ travel.valor }}</a></li>
+            <br>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'travel_new' %}">Nuevo Viaje</a>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+{% endblock %}
