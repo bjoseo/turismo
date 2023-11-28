@@ -59,9 +59,46 @@ class Destinos(models.Model):
     def clean_country(self):
         return self.cleaned_data['country']
 
-    # class Meta:
-    #     db_table = 'Destinos'
-    #     verbose_name_plural = 'Destinos'
+
+#------------------------------------------------------------------
+# tabla que contiene las excursiones que se pueden contratar
+#------------------------------------------------------------------
+
+class Excursiones(models.Model):
+    # Campos
+    city = models.CharField(
+        max_length=20,
+        verbose_name='Ciudad',
+        )
+    description = models.CharField(
+        max_length=1000, 
+        verbose_name='Descripcion',
+        )
+    valor = models.FloatField(
+        default=0,
+        verbose_name='valor',
+        )
+    tipo = models.CharField(
+        max_length=1, 
+        default=1,
+        # choices=estado,
+        verbose_name='Estado',
+        )
+
+    # Metadata
+    class Meta:
+        ordering = ["city"]
+
+    # Metodos
+    def detalle_excursiones(self):
+        return f"{self.city} -- {self.description}"
+    
+    def __str__(self):
+        return self.detalle_excursiones()
+  
+    def clean_city(self):
+        return self.cleaned_data['city']
+    
 
 #------------------------------------------------------------------
 # Tabla Travel para registrar cada viaje contratado por un usuario
@@ -69,9 +106,10 @@ class Destinos(models.Model):
 
 class Travel(models.Model):
     # Campos
-    destino = models.ManyToManyField(
+    destino = models.ForeignKey(
         Destinos, 
-        through="Traveldestinos",
+        on_delete=models.CASCADE,
+        null=True,
         blank=True, 
         verbose_name='Destino',
         )
@@ -91,36 +129,33 @@ class Travel(models.Model):
         default=1,
         verbose_name='pasajeros',
         )
-    usuarios = models.ManyToManyField(
+    usuarios = models.ForeignKey(
         User, 
-        through="Usertravel",
+        on_delete=models.CASCADE,
+        null=True,
         blank=True, 
         verbose_name='Usuario',
         )
+    excursiones = models.ManyToManyField(
+        Excursiones, 
+        through="Excursiontravel",
+        blank=True, 
+        verbose_name='Excursion',
+        )
 
-    # Metadata
-    # class Meta:
-    #     ordering = ["destino"]
 
     # Metodos
-    def travel_usuario(self):
-        return f"{self.usuarios} -- {self.destino}"
+    def travel_destinos(self):
+        return f"{self.excursiones} -- {self.destino}"
     
     def __str__(self):
-        return self.travel_usuario()
+        return self.travel_destinos()
     
-    # def display_usuario(self):
-
-    #Crea un string para usuario. esto es requerido para mostrar usuario en Admin.
-
-    #     return ', '.join([ User.username for usuario in self.User.all()[:3] ])
-    # display_usuario.short_description = 'Usuario'
-
 #------------------------------------------------------------------
 # Tabla intermedia para trabajar con relaciones many to many (Travel - Usuarios)
 #------------------------------------------------------------------
 
-class Usertravel(models.Model):
+class Excursiontravel(models.Model):
     # Campos
     travel = models.ForeignKey(
         Travel,
@@ -129,43 +164,21 @@ class Usertravel(models.Model):
          blank=True, 
         verbose_name="Travel",
     )
-    usuarios = models.ForeignKey(
-        User,
+    excursiones = models.ForeignKey(
+        Excursiones,
         on_delete=models.CASCADE,
          null=True,
          blank=True, 
-        verbose_name="Usuario",
+        verbose_name="Excursiones",
     )
-    fecha = models.DateField(
-        null=True,
-        verbose_name='Fecha',
-        )
 
-#------------------------------------------------------------------
-# Tabla intermedia para trabajar con relaciones many to many (Travel - Destinos)
-#------------------------------------------------------------------
-
-class Traveldestinos(models.Model):
-    # Campos
-    travel = models.ForeignKey(
-        Travel,
-        on_delete=models.CASCADE,
-         null=True,
-         blank=True, 
-        verbose_name="Travel",
-    )
-    destino = models.ForeignKey(
-        Destinos,
-        on_delete=models.CASCADE,
-         null=True,
-         blank=True, 
-        verbose_name="Usuario",
-    )
-    fecha = models.DateField(
-        null=True,
-        verbose_name='Fecha',
-        )
-
+        # Metodos
+    def travel_excursiones(self):
+        return f"{self.travel} -- {self.excursiones}"
+    
+    def __str__(self):
+        return self.travel_excursiones()
+    
 #------------------------------------------------------------------
 # Tabla para registrar mensajes de usuarios
 #------------------------------------------------------------------
@@ -180,12 +193,8 @@ class Contacto(models.Model):
         max_length=20,
         verbose_name='Apellido',
         )
-    email = models.ForeignKey(
-        User,
-        null=False,
-        blank=False,
-        related_name='User',
-        on_delete=models.CASCADE,
+    email = models.CharField(
+        max_length=200,
         verbose_name='Email',
         )
     subject = models.CharField(
@@ -211,5 +220,33 @@ class Contacto(models.Model):
     
     def __str__(self):
         return self.detalle_FormContacto()
+
+
+#------------------------------------------------------------------
+# Tabla intermedia para trabajar con relaciones many to many (Travel - Usuarios)
+#------------------------------------------------------------------
+
+# class Usertravel(models.Model):
+#     # Campos
+#     travel = models.ForeignKey(
+#         Travel,
+#         on_delete=models.CASCADE,
+#          null=True,
+#          blank=True, 
+#         verbose_name="Travel",
+#     )
+#     usuarios = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#          null=True,
+#          blank=True, 
+#         verbose_name="Usuario",
+#     )
+#     fecha = models.DateField(
+#         null=True,
+#         verbose_name='Fecha',
+#         )
+
+
     
 

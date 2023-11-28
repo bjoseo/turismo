@@ -2,88 +2,69 @@
     # finegap/views.py
 
 from django.shortcuts import render, redirect
-from .forms import Formulariocontacto, FormularioUsuario
+from .forms import SignupForm, ExcursiontravelForm, TravelForm
 from django.http import HttpResponse
-from .models import Contacto, Destinos, Travel
+from .models import Contacto, Destinos, Travel, Excursiones, Excursiontravel
 from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.db import IntegrityError
 from django.contrib import messages
 from datetime import datetime
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404
+from .forms import DestinosForm, ExcursionesForm
 
 
 # pagina de inicio
 
 def home(request):
-    request.session['user_name'] = "{{user.username}}"
-    request.session['user_last_name'] = "{{user.last_name}}"
-    request.session['usuario'] = "{{user.id}}"
+    # user = int("{{ user.id }}")
     destinos = Destinos.objects.all()
-    # return render(request,'core/mostrar_destinos.html',{'destinos':destinos} )
+    travel = Travel.objects.all()
+    
+    return render(request, 'core/home.html',{'destinos':destinos,'travel':travel})
 
-    return render(request, 'core/home.html',{'destinos':destinos})
+# pagina para registrarse
 
-# pagina para login
-
-# def login(request):
-#     context = {
-#     }
-#     return render(request, "core/login.html", context)
-
-# opcion para crear usuario
-
-def create_usuario(request):
+def signup(request):
     if request.method == 'POST':
-        form = FormularioUsuario(request.POST)
-        # if form.is_valid():
-        #     # Procesar el formulario si es válido
-        #     nombre = form.cleaned_data['name']
-        #     correo = form.cleaned_data['email']
-        #     password = form.cleaned_data['password']
-        #     # Puedes realizar acciones adicionales aquí, como enviar un correo electrónico o guardar en la base de datos
-        #     # usuario = Usuario(name=nombre,email=correo,password=password)
-
-        #     try:
-        #         usuario.save()
-        #     except Exception as err:
-        #         messages.error(request, " ocurrio un error ",err)
-        #         return redirect(reverse("login"))
-
-        #     messages.info(request, "Usuario dado de alta correctamente")
-        #     return redirect(reverse("home"))
+        form = SignupForm(data=request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            usuario = User(username=usuario,email=email,password=password)
+            usuario = form.save()
+            usuario.set_password(usuario.password)
+            try:
+                usuario.save()
+            except Exception as err:
+                messages.error(request, " ocurrio un error ",err)
+                return redirect('home')
+            messages.info(request, "usuario dado de alta correctamente")
+            return redirect('home')
     else:
-        # Mostrar un formulario en blanco si no se ha enviado
-        form = FormularioUsuario()
+        form = SignupForm()
 
-    return render(request, 'core/create_usuario.html', {'form': form})
-
-
+    return render(request, 'core/signup.html', {'form': form})
 
 # pagina para enviar mensaje de contacto
 
 def contacto(request):
-    user_name = request.session['user_name']
-    user_last_name = request.session['user_last_name']
-    # user_id = request.session['usuario']
-    
-    context = {
-        'user_name' : user_name,
-        'user_last_name' : user_last_name,
-        # 'user_id' : user_id
-    }
-
+   
     if request.method == 'POST':
-        form = Formulariocontacto(request.POST)
-        if form.is_valid():
-            # Procesar el formulario si es válido
-            nombre = form.cleaned_data['name']
-            apellido = form.cleaned_data['lastname']
-            correo = form.cleaned_data['email']
-            asunto = form.cleaned_data['subject']
-            mensaje = form.cleaned_data['message']
+            # from django.contrib.auth.models import User
+            # user = User.objects.get(pk=user.id)
+
+            # correo = user.email
+            nombre = request.POST['name']
+            apellido = request.POST['lastname']
+            correo = request.POST['email']
+            asunto = request.POST['subject']
+            mensaje = request.POST['message']
 
             fecha = datetime.now()
             # Puedes realizar acciones adicionales aquí, como enviar un correo electrónico o guardar en la base de datos
@@ -97,11 +78,10 @@ def contacto(request):
             
             messages.info(request, "mensaje enviado correctamente")
             return redirect('home')
-    else:
-        # Mostrar un formulario en blanco si no se ha enviado
-        form = Formulariocontacto()
+    context = {
+    }
 
-    return render(request, 'core/contacto.html', {'form': form})
+    return render(request, 'core/contacto.html', context )
 
 # listado de mensajes de contacto
 
@@ -110,15 +90,24 @@ def mensajes_listado(request):
     ordering = ['name']
     return render(request,'core/mensajes_listado.html',{'mensajes':mensajes} )
 
-
-
 # pagina acerca de nosotros
 
 def acerca_de(request):
     return render(request, 'core/acerca_de.html')
 
-# Opcion Administracion CRUD tabla Destinos
+# Opciones de Administracion
+
 @login_required  
+
+def administracion(request):
+    context = {
+    }
+    return render(request,'core/administracion.html',context)
+
+# Opcion Administracion CRUD tabla Destinos
+
+@login_required  
+
 def mostrar_destinos(request):
     destinos = Destinos.objects.all()
     return render(request,'core/mostrar_destinos.html',{'destinos':destinos} )
@@ -137,14 +126,15 @@ class DestinosCreateView(CreateView):
 def modificar_destino(request,pk):
     destinos = Destinos.objects.get(id=pk)
     if request.method == 'POST':
-            Destinos.Id = request.POST['Id']
-            Destinos.city = request.POST['city']
-            Destinos.country = request.POST['country']
-            Destinos.description = request.POST['description']
-            Destinos.urlImg = request.POST.get('urlImg')
-            Destinos.tipo = request.POST.get('tipo')
+            destinos.Id = request.POST['Id']
+            destinos.city = request.POST['city']
+            destinos.country = request.POST['country']
+            destinos.description = request.POST['description']
+            destinos.urlImg = request.POST.get('urlImg')
+            destinos.tipo = request.POST.get('tipo')
+
             try:
-                Destinos.save()   
+                destinos.save()   
             except Exception as err:
                 messages.error(request, " ocurrio un error ",err)
                 return redirect('mostrar_destinos')
@@ -177,91 +167,138 @@ def eliminar_destino(request, pk):
 
     return render(request, 'core/eliminar_destino.html', context)
 
-# alta Travel
+# Opcion Administracion CRUD tabla Excursiones
 
-def alta_travel(request,pk):
-    destinos = Destinos.objects.get(id=pk)
+@login_required  
+
+def mostrar_excursiones(request):
+    excursiones = Excursiones.objects.all()
+    return render(request,'core/mostrar_excursiones.html',{'excursiones':excursiones} )
+
+# alta Excursion
+
+class ExcursionesCreateView(CreateView):
+    model = Excursiones
+    request  = "files"
+    template_name = 'core/alta_excursion.html'
+    success_url = 'mostrar_excursiones'
+    fields = '__all__'
+
+# modificar Excursion
+
+def modificar_excursion(request,pk):
+    excursion = Excursiones.objects.get(id=pk)
     if request.method == 'POST':
-            Destinos.Id = request.POST['Id']
-            Destinos.city = request.POST['city']
-            Destinos.country = request.POST['country']
-            Destinos.description = request.POST['description']
-            Destinos.urlImg = request.POST.get('urlImg')
-            Destinos.tipo = request.POST.get('tipo')
+            excursion.city = request.POST['city']
+            excursion.description = request.POST['description']
+            excursion.valor = request.POST.get('valor')
+            excursion.tipo = request.POST.get('tipo')
             try:
-                Destinos.save()   
+                excursion.save()   
             except Exception as err:
                 messages.error(request, " ocurrio un error ",err)
-                return redirect('mostrar_destinos')
+                return redirect('mostrar_excursiones')
 
-            messages.info(request, "Se Modifico el Destino correctamente")
-            return redirect('mostrar_destinos')
+            messages.info(request, "Se Modifico la Excursion correctamente")
+            return redirect('mostrar_excursiones')
     context = {
-            'destinos': destinos,
+            'excursion': excursion,
     }
 
-    return render(request,'core/alta_travel.html',context)
+    return render(request,'core/modificar_excursion.html',context)
 
+# eliminar Excursion
 
-# class TravelCreateView(CreateView):
-#     model = Destinos
-#     # model1 = Travel
-#     request  = "files"
-#     template_name = 'core/alta_travel.html'
-#     success_url = 'home'
-#     fields = '__all__'
+def eliminar_excursion(request, pk):
+    excursion = Excursiones.objects.get(id=pk)
+    if request.method == 'POST':
+        try:
+            excursion.delete()
+        except Exception as err:
+            messages.error(request, " ocurrio un error ",err)
+            return redirect('mostrar_excursiones')
 
-# pagina de error 404
+        messages.info(request, "Se Elimino la Excursion correctamente")
+        return redirect('mostrar_excursiones')
+
+    context = {
+        'excursion': excursion,
+    }
+
+    return render(request, 'core/eliminar_excursion.html', context)
+
+# Listado de  Paquetes
+
+def travel_list(request):
+    travels = Travel.objects.all()
+    return render(request, 'travel/travel_list.html', {'travels': travels})
+
+# detalle Paquete para usuario
+
+def travel_detail(request, pk):
+    travel = get_object_or_404(Travel, pk=pk)
+    return render(request, 'travel/travel_detail.html', {'travel': travel})
+
+# detalle Paquetes para administrador
+
+def travel_detail_admin(request, pk):
+    travel = get_object_or_404(Travel, pk=pk)
+    return render(request, 'travel/travel_detail_admin.html', {'travel': travel})
+
+# crear Paquete
+
+def travel_new(request):
+    if request.method == "POST":
+        form = TravelForm(request.POST)
+        excursiontravel_form = ExcursiontravelForm(request.POST)
+        if form.is_valid() and excursiontravel_form.is_valid():
+            travel = form.save(commit=False)
+            travel.save()
+            excursiontravel = excursiontravel_form.save(commit=False)
+            excursiontravel.save()
+            return redirect('travel_detail', pk=travel.pk)
+    else:
+        form = TravelForm()
+    return render(request, 'travel/travel_edit.html', {'form': form})
+
+# editar Paquete
+
+def travel_edit(request, pk):
+    travel = get_object_or_404(Travel, pk=pk)
+    if request.method == "POST":
+        form = TravelForm(request.POST, instance=travel)
+        if form.is_valid():
+            travel = form.save(commit=False)
+            travel.save()
+            return redirect('travel_list')
+    else:
+        form = TravelForm(instance=travel)
+    return render(request, 'travel/travel_edit.html', {'form': form})
+
+# eliminar Paquete
+
+def travel_delete(request, pk):
+    travel = get_object_or_404(Travel, pk=pk)
+    if request.method == 'POST':
+        try:
+            travel.delete()
+        except Exception as err:
+            messages.error(request, " ocurrio un error ",err)
+            return redirect('mostrar_excursiones')
+
+        messages.info(request, "Se Elimino la Excursion correctamente")
+        return redirect('travel_list')
+
+    context = {
+        'travel': travel,
+    }
+
+    return render(request, 'travel/travel_delete.html', context)
+
+# pagina de error
 
 def error_404(request):
     context = {
     }
     return render(request, "core/error_404.html", context)
 
-
-# def modificar_destino(request, pk):
-#     destinos = Destinos.objects.get(id=pk)
-#     if request.method == "POST":
-#         form = DestinoForm(request.POST, request.FILES, instance=destinos)
-#         if form.is_valid():
-#             destinos = form.save(commit=False)
-#             destinos.save()
-            
-#             messages.info(request, "Se Modifico el Destino correctamente")
-
-#             return redirect(reverse("mostrar_destinos"))
-#     else:
-#         form = DestinoForm(instance=destinos)
-#     return render(request, 'core/modificar_destino.html', {'form': form})
-
-
-
-
-
-# class DestinosListView(LoginRequiredMixin,ListView):
-#     model = Destinos
-#     context_object_name = 'destinos'
-#     template_name = 'core/destinos_listado.html'
-#     ordering = ['tipo']
-
-# class MensajesListView(LoginRequiredMixin,ListView):
-#     model = Contacto
-#     context_object_name = 'listado_mensajes'
-#     template_name = 'core/mensajes_listado.html'
-#     ordering = ['name']
-
-# Recuperar un Usuario
-
-# def read_usuario(request,pk):
-#     try:
-#         destinos = Usuario.objects.get(id=pk)
-#     except Exception as err:
-#         messages.error(request, " no exixte ",err)
-#         return
-            
-#     messages.info(request, "si existe")
-#     return
-
-    # return (usuario.email)
-
-    # return render(request, 'core/contacto.html', {'form': form}, context = context)

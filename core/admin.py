@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db.models.fields.related import ManyToManyField
 from django.forms.models import ModelMultipleChoiceField
 from django.http.request import HttpRequest
-from .models import Destinos, Contacto, Travel, Traveldestinos, Usertravel
+from .models import Destinos, Contacto, Travel ,Excursiones, Excursiontravel
 from django.contrib.auth.models import User
 
 # Register your models here.
@@ -26,54 +26,26 @@ admin.site.register(Contacto, ContactosAdmin)
 
 admin.site.site_header = 'fineGap - Turismo'
 
-class TraveldestinosInline(admin.TabularInline):
-    model = Traveldestinos
-    extra = 1
-
-class UsertravelInline(admin.TabularInline):
-    model = Usertravel
+class ExcursiontravelInline(admin.TabularInline):
+    model = Excursiontravel
     extra = 1
 
 
 class TravelAdmin(admin.ModelAdmin):
-    inlines = [UsertravelInline,TraveldestinosInline]
-    # inlines = [TraveldestinosInline]
-    list_display = ('fecha_desde', 'fecha_hasta', 'valor', 'pasajeros')
+    inlines = [ExcursiontravelInline]
+    list_display = ('fecha_desde', 'fecha_hasta', 'valor', 'pasajeros', 'destino', 'usuarios')
 
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == 'destino':
-            kwargs["queryset"] = Destinos.objects.all().order_by("tipo")
-        return super().formfield_for_manytomany(db_field, request, **kwargs)
-
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == 'usuarios':
-            kwargs["queryset"] = User.objects.all().order_by("username")
+        if db_field.name == 'excursiones':
+            kwargs["queryset"] = Excursiones.objects.all().order_by("city")
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 admin.site.register(Travel, TravelAdmin)
 
-class TraveldestinosAdmin(admin.ModelAdmin):
-      list_display = ('travel', 'destino','fecha') 
-      search_fields = ('fecha', 'destino')
-      fields = ('travel', 'destino','fecha')
-      ordering = ('fecha',)
-admin.site.register(Traveldestinos,TraveldestinosAdmin)
-
-class UsertravelAdmin(admin.ModelAdmin):
-      list_display = ('travel', 'fecha') 
-      search_fields = ('fecha', 'usuario')
-      fields = ('travel', 'usuario','fecha')
-      ordering = ('fecha',)
-admin.site.register(Usertravel,UsertravelAdmin)
 
 
-# class TravelAdmin(admin.ModelAdmin):
-#       list_display = ('destino', 'fecha_desde','fecha_hasta','valor','pasajeros') #Ahora la interfaz mostrará esto.
-#       search_fields = ('destino', 'fecha_desde')
-#       fields = ('destino', 'fecha_desde','fecha_hasta','valor','pasajeros')
-#       ordering = ('fecha_desde',)
-# admin.site.register(Travel, TravelAdmin)
+
 
 
 
