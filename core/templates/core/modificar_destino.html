@@ -37,6 +37,7 @@
                     <input type="file" name="urlImg">
                     {% else %}
                     <img src="" style="height:50px; width:50px;" alt="...">
+                    <input type="file" name="urlImg">
                     {% endif %}
                 </td>
             </tr>
@@ -46,17 +47,20 @@
                 </td>
                 <td>
                     <select id="tipo" name="tipo" onChange="">
-                        <option  value="1" >Elegidos</option>
-                        <option  value="2" >Recomendados</option>
-                        <option  value="3" >inactivo</option>
+                        {% if destinos.tipo == '1' %}
+                            <option  value="1" selected="selected">Elegidos</option>
+                            <option  value="2">Recomendados</option>
+                            <option  value="3">Inactivo</option>
+                        {% elif destinos.tipo == '2' %}
+                            <option  value="1">Elegidos</option>
+                            <option  value="2" selected="selected">Recomendados</option>
+                            <option  value="3">Inactivo</option>
+                        {% elif destinos.tipo == '3' %}
+                            <option  value="1">Elegidos</option>
+                            <option  value="2">Recomendados</option>
+                            <option  value="3" selected="selected">Inactivo</option>
+                        {% endif %}
                     </select>                        
-                    <!-- {% if destino.tipo == '1' %}
-                        <option  value="1" selected>Elegidos</option>
-                    {% elif destino.tipo == '2' %}
-                        <option  value="2" selected>Recomendados</option>
-                    {% else %}
-                        <option  value="3" selected>inactivo</option>
-                    {% endif %} -->
                 </td>
             </tr>
             <tr>
@@ -73,3 +77,8 @@
 </div>
 <script src="{% static 'core/js/index.js' %}"></script>
 {% endblock %}
+
+
+                        <!-- <option  value="1" >Elegidos</option>
+                        <option  value="2" >Recomendados</option>
+                        <option  value="3" >inactivo</option> -->

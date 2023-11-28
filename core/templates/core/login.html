@@ -36,7 +36,7 @@
             </form>
             <div class="pie-form">
                 <a href="{% url 'error' %}">¿Olvidaste tu contraseña?</a>
-                <a href="{% url 'create_usuario' %}">¿No tienes Cuenta? Registrate</a>
+                <a href="{% url 'signup' %}">¿No tienes Cuenta? Registrate</a>
                 <a href="{% url 'home' %}">← Volver</a>
             </div>
         </div>
@@ -48,18 +48,3 @@
 
 {% endblock %}
 
-<!-- <td>{{ form.username.label_tag }}</td> -->
-<!-- <td>{{ form.password.label_tag }}</td> -->
-
-<!-- <form class="cuadro">
-    <input type="email" id="inputEmail" value="" class="form-control" placeholder="Correo electronico"
-        required autofocus>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña"
-        required>
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" value="remember-me"> Recordarme
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="{% url 'home' %}">Iniciar sesión</button>
-    </div>
-</form> -->

@@ -7,17 +7,19 @@
 {%endblock%}
 {% block content %}
 <div class="Main">
+    {% for paquete in travel %}
+    {% if paquete.usuarios_id == user.id %}
+        <p><b> {{user.username}} {{paquete.destino}} {{paquete.fecha_desde}} {{paquete.fecha_hasta}} {{paquete.valor}}</b> ***</p>
+    {% endif %}
+    {% endfor %}
 
     <h2 class="title-section">NUESTROS DETINOS MÁS ELIGIDOS</h2>
     <section class="articles" id="id-section-elegidos">
-        <table align="center" style="margin: 20px 40px;">
+        <table align="center" style="width: 100%;margin: 20px 40px;">
             <tbody>
                 {% for destino in destinos %}
                 {% if destino.tipo == '1' %}
                 <tr>
-                    <td>{{destino.Id}}</td>
-                    <td>{{destino.city}}</td>
-                    <td>{{destino.country}}</td>
                     <td>{{destino.description}}</td>
 
                     <td>
@@ -30,11 +32,12 @@
                     </td>
                     <td>
                         {% if user.is_authenticated %}
-                            <a href="alta_travel/{{destino.pk}}">
+                            <a href="travel/travel_new">
                                 <img src="{% static 'core/images/compra-en-linea.png' %}" style="height:80px; width:80px;"
                                     alt="...">
                             </a>
                         {% endif %}
+                        <td>{{destino.city}}</td>
                     </td>
                 </tr>
                 {% endif %}
@@ -51,9 +54,6 @@
                 {% for destino in destinos %}
                 {% if destino.tipo == '2' %}
                 <tr>
-                    <td>{{destino.Id}}</td>
-                    <td>{{destino.city}}</td>
-                    <td>{{destino.country}}</td>
                     <td>{{destino.description}}</td>
 
                     <td>
@@ -65,10 +65,13 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="alta_travel/{{destino.pk}}">
-                            <img src="{% static 'core/images/compra-en-linea.png' %}" style="height:80px; width:80px;"
-                                alt="...">
-                        </a>
+                        {% if user.is_authenticated %}
+                            <a href="travel/travel_new">
+                                <img src="{% static 'core/images/compra-en-linea.png' %}" style="height:80px; width:80px;"
+                                    alt="...">
+                            </a>
+                        {% endif %}
+                        <td>{{destino.city}}</td>
                     </td>
                 </tr>
                 {% endif %}
@@ -78,7 +81,4 @@
     </section>
 </div>
 <script src="{% static 'core/js/index.js' %}"></script>
-<!-- <script src="{% static 'core/js/elements.js' %}"></script> -->
 {% endblock %}
-<!-- {% if destino.tipo == '1' %}
-{% endif %} -->

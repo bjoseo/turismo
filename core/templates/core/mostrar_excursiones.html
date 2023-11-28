@@ -1,0 +1,59 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/administracion.css' %}">
+{%endblock%}
+{% block title %}Alta de Excursiones{% endblock %}
+{% block content %}
+
+<h2 style="text-align:center"> Informacion de Excursiones </h2>
+<table align="center" style="margin: 20px 40px;">
+    <thead>
+        <tr>
+            <th>ciudad</th>
+            <th>Descripcion</th>
+            <th>Valor</th>
+            <th>Estado</th>
+            <th>Actualizar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for excursion in excursiones %}
+        <tr>
+            <td>{{excursion.city}}</td>
+            <td>{{excursion.description}}</td>
+            <td>{{excursion.valor}}</td>
+
+            <td>
+                {% if excursion.tipo == '1' %}
+                    "Activo"
+                {% else %}
+                    "Inactivo"
+                {% endif %}
+            </td>
+            <td>
+                <a href="modificar_excursion/{{excursion.pk}}">
+                <img src="{% static 'core/images/editar.png' %}" style="height:40px; width:40px;" alt="...">
+                </a>
+            </td>
+            <td>
+                <a href="eliminar_excursion/{{excursion.pk}}">
+                <img src="{% static 'core/images/eliminar.png' %}" style="height:40px; width:40px;" alt="...">
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br><br>
+<div class="alert alert-danger" role="alert">
+    <a  class="alta" href="{% url 'alta_excursion' %}">Ud. quiere ingresar mas Excursiones?</a>
+
+    <p>
+        <a class="volver" href="{% url 'administracion' %}">Volver</a>
+    </p>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/administracion.css' %}">
+{%endblock%}
+{% block title %}Alta de Excursion{% endblock %}
+{% block content %}
+<div class="Main">
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <br><br>
+        <div class="alert alert-danger" role="alert">
+            Esta seguro que quiere eliminar esta Excursion?
+             Ciudad ==> {{ excursion.city}} Descripcion ==> {{ excursion.description}}
+        </div>
+        <br><br>
+
+        <div class="alert alert-danger" role="alert">
+            <a href="{% url 'mostrar_excursiones' %}"><-- Volver</a>
+            <p>
+                <input class="btn btn-danger" type="submit" value="Confirmar">
+            </p>
+        </div>
+    </form>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+{% endblock %}

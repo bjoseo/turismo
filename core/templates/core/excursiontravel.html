@@ -1,0 +1,32 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/administracion.css' %}">
+{%endblock%}
+{% block title %}Alta Travel{% endblock %}
+{% block content %}
+<div class="Main">
+
+    <h2 style="text-align:center"> Destinos Seleccionado</h2>
+    <form  method="POST" action="">
+        {% csrf_token %}
+        {{ travelform_form.as_p }}
+        {{ excursiontravel_form.as_p }}
+        <input type="submit" value="Guardar">
+   </form>
+</div>
+<script src="{% static 'core/js/index.js' %}"></script>
+{% endblock %}
+
+<!-- <tr>
+    <td>
+        <label for="tipo">Seleccione Estado</label>
+    </td>
+    <td>
+        <select id="tipo" name="tipo" onChange="">
+            <option  value="1" >Elegidos</option>
+            <option  value="2" >Recomendados</option>
+            <option  value="3" >inactivo</option>
+        </select>                        
+    </td>
+</tr> -->

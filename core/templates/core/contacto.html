@@ -16,31 +16,42 @@
       width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
-  <form method="post" action="{% url 'contacto' %}">
+  <form method="POST" action="{% url 'contacto' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    <table style="width:50%" align="center">
+      <tr>
+        <td>Usuario</td>
+        <td><input type="text" value="{{ user.id }}" name="Id" readonly></td>
+      </tr>
+      <tr>
+        <td>Nombre</td>
+        <td><input type="text" value="{{ user.username }}" name="name" readonly></td>
+      </tr>
+      <tr>
+        <td>Apellido</td>
+        <td><input type="text" value="{{ user.last_name }}" name="lastname" readonly></td>
+      </tr>
+      <tr>
+        <td>Correo</td>
+        <td><input type="text" value="{{ user.email }}" name="email" readonly></td>
+      </tr>
+      <tr>
+        <td>Asunto</td>
+        <td><input type="text" name="subject" autofocus></td>
+      </tr>
+      <tr>
+        <td>Mensaje</td>
+        <td><input type="text" name="message"></td>
+      </tr>
+    </table>
+
     <button class="btn" type="submit">Enviar formulario</button>
     {% if perms.core.view_contacto %}
-      <a href="{% url 'mensajes_listado' %}">Ver mensajes</a>
+    <a href="{% url 'mensajes_listado' %}">Ver mensajes</a>
     {% endif %}
-    </form>
+  </form>
 </div>
 <script src="{% static 'core/js/index.js' %}"></script>
 
-<!-- <script>
-  function verdatos(){
-  var name = document.getElementById("username").value;
-  var lastname = document.getElementById("lastname").value;
-  var id = document.getElementById("usuario").value;
-  alert(" lastname "+lastname)
-  document.getElementById("fname").value = name;
-  document.getElementById("fapell").value = lastname;
-  document.getElementById("fmail").value = id;
-} 
-</script> -->
-
 {% endblock %}
-
-    <!-- {% if user.is_authenticated %}
-      <a href="{% url 'mensajes_listado' %}">Ver mensajes</a>
-    {% endif %} -->

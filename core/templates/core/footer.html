@@ -31,10 +31,10 @@
         <h3>Mapa del sitio</h3>
         <a class="our-site" href="{% url 'home' %}">Home</a>
         <a class="our-site" href="{% url 'login' %}">login</a>
-        <a class="our-site" href="{% url 'contacto' %}">Contáctenos</a>
+        <a class="our-site" href="{% url 'contacto'%} ">Contáctenos</a>
         <a class="our-site" href="{% url 'acerca_de' %}">Acerca de nosotros</a>
         {% if perms.core.view_destinos %}
-            <a class="our-site" href="{% url 'mostrar_destinos' %}">Administracion</a>
+            <a class="our-site" href="{% url 'administracion' %}">Administracion</a>
         {% endif %}
     </div>
 </div>

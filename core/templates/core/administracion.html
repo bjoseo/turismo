@@ -1,0 +1,52 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'core/css/style_pages.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/estilo.css' %}">
+{%endblock%}
+
+{% block title %}administracion{% endblock %}
+{% block content %}
+
+<div class="Main">
+    <div id="central">
+        <div id="login">
+            <div class="div-logo">
+                <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+                <lord-icon id="logo" src="https://cdn.lordicon.com/vkweisbr.json" trigger="loop-on-hover" delay="2000"
+                    colors="outline:#121331,primary:#646e78,secondary:#2ca58d,tertiary:#1d4e89"
+                    style="width:100px;height:100px"> </lord-icon>
+                <h2 class="welcome">Seleccione opcion</h2>
+                <div class="pie-form">
+                    <a href="{% url 'mostrar_destinos' %}">Administrar Destinos</a>
+                    <br>
+                    <a href="{% url 'mostrar_excursiones' %}">Administrar Excursiones</a>
+                    <br>
+                    <a href="{% url 'travel_list' %}">Paquetes vendidos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="{% static 'core/js/index.js' %}"></script>
+
+{% endblock %}
+
+<!-- <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Nombre Usuario :</td>
+            <td class="form-control">{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>Contraseña</td>
+            <td class="form-control">{{ form.password }}</td>
+        </tr>
+    </table>
+
+    <input type="submit" value="login">
+    <input type="hidden" name="next" value="{{ next }}">
+</form> -->
